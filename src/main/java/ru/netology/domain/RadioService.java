@@ -1,22 +1,53 @@
 package ru.netology.domain;
 
-import java.io.InputStream;
-import java.util.Scanner;
 
 public class RadioService {
-    private int minStation = 0;
-    private int maxStation = 9;
+
+
+    private int minStation;
+    private int maxStation;
     private int currentVolume;
     private int currentStation;
-    private int minVolume = 0;
-    private int maxVolume = 10;
+    private int minVolume;
+    private int maxVolume;
+    private int countStation;
 
+    public RadioService(int countStation) {
+        this.maxStation = countStation - 1;
+    }
+
+    public int getMaxStation() {
+        return maxStation;
+    }
+
+    public int getMaxVolume() {
+        return maxVolume;
+    }
+
+    public RadioService() {
+    }
+
+    public RadioService(int minStation, int maxStation, int minVolume, int maxVolume) {
+        this.minStation = minStation;
+        this.maxStation = maxStation;
+        this.minVolume = minVolume;
+        this.maxVolume = maxVolume;
+    }
 
     public int getCurrentVolume() {
         return currentVolume;
     }
 
+
     public void setCurrentVolume(int currentVolume) {
+        if (currentVolume >= maxVolume) {
+            this.currentVolume = maxVolume;
+            return;
+        }
+        if (currentVolume <= minVolume) {
+            this.currentVolume = minVolume;
+            return;
+        }
         this.currentVolume = currentVolume;
     }
 
@@ -24,7 +55,7 @@ public class RadioService {
         if (currentVolume >= maxVolume) {
             return;
         }
-        this.currentVolume ++;
+        this.currentVolume++;
     }
 
 
@@ -32,7 +63,7 @@ public class RadioService {
         if (currentVolume <= minVolume) {
             return;
         }
-        this.currentVolume --;
+        this.currentVolume--;
     }
 
 
@@ -41,6 +72,12 @@ public class RadioService {
     }
 
     public void setCurrentStation(int currentStation) {
+        if (currentStation <= minStation) {
+            return;
+        }
+        if (currentStation >= maxStation) {
+            return;
+        }
         this.currentStation = currentStation;
 
     }
@@ -49,14 +86,21 @@ public class RadioService {
         if (currentStation >= maxStation) {
             this.currentStation = minStation;
             return;
-        }  this.currentStation ++;
+        }
+        if (currentStation == minStation) {
+            return;
+        }
+        this.currentStation++;
     }
 
     public void setDownCurrentStation() {
         if (currentStation <= minStation) {
             this.currentStation = maxStation;
             return;
-        } this.currentStation --;
+        }
+        if (currentStation == maxStation) {
+            return;
+        }
+        this.currentStation--;
     }
-
 }
